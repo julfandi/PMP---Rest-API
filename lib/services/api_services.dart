@@ -34,4 +34,40 @@ class ApiServices {
       return false;
     }
   }
+
+  // update
+  static Future<bool> updateMahasiswa({
+    required int id,
+    required String nim,
+    required String nama,
+  }) async {
+    try {
+      final response = await http.put(
+        Uri.parse('$baseUrl/$id'),
+        headers: {
+          'Content-type' : 'application/json',
+        },
+        body: jsonEncode({
+          'nim' : nim,
+          'nama' : nama
+        }),
+      );
+      return response.statusCode >= 200 && response.statusCode < 300;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // delete
+  static Future<bool> deleteMahasiswa(
+    int id,
+  ) async {
+    try {
+      final response = await http.delete(Uri.parse('$baseUrl/$id'));
+
+      return response.statusCode >= 200 && response.statusCode < 300; // baseUrl asal : https://api.atmaluhur.ac.id/pmp/mahasiswa/
+    } catch (e) {
+      return false;
+    }
+  }
 }
